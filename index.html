@@ -130,7 +130,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">2</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">3</span></a>
 
   </li>
   </ul>
@@ -160,7 +160,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://fengbu-jue.github.io/2022/04/04/%E7%AC%AC%E4%B8%80%E7%AB%A0.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+    <link itemprop="mainEntityOfPage" href="https://fengbu-jue.github.io/2022/04/05/%E7%AC%AC%E5%9B%9B%E7%AB%A0.%E6%8F%92%E5%80%BC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/smile.jpg">
@@ -174,7 +174,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/04/04/%E7%AC%AC%E4%B8%80%E7%AB%A0.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="post-title-link" itemprop="url">未命名</a>
+            <a href="/2022/04/05/%E7%AC%AC%E5%9B%9B%E7%AB%A0.%E6%8F%92%E5%80%BC/" class="post-title-link" itemprop="url">Chapter 4	插值</a>
         </h2>
 
         <div class="post-meta">
@@ -185,7 +185,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-04-04 16:37:48 / 修改时间：16:36:49" itemprop="dateCreated datePublished" datetime="2022-04-04T16:37:48+08:00">2022-04-04</time>
+              <time title="创建时间：2022-04-05 18:23:20 / 修改时间：18:24:07" itemprop="dateCreated datePublished" datetime="2022-04-05T18:23:20+08:00">2022-04-05</time>
             </span>
 
           
@@ -199,7 +199,217 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="Chapter-0-数值分析基础知识"><a href="#Chapter-0-数值分析基础知识" class="headerlink" title="Chapter 0      数值分析基础知识"></a>Chapter 0      数值分析基础知识</h1><h2 id="多项式求值"><a href="#多项式求值" class="headerlink" title="多项式求值"></a>多项式求值</h2><p>最优方法：嵌套方法（霍纳方法）</p>
+          <h2 id="多项式插值"><a href="#多项式插值" class="headerlink" title="多项式插值"></a>多项式插值</h2><p>通过n+1个点可以确定一个至多n阶的多项式函数（加上常数项有n+1个未知数），易于理解但是求解困难，需要求解一个（n+1）元一次方程组，有O($n^3$)复杂度。</p>
+<p>有以下方法进行简化求解，实际内容都是多项式插值</p>
+<h3 id="1-拉格朗日插值法"><a href="#1-拉格朗日插值法" class="headerlink" title="1.拉格朗日插值法"></a>1.拉格朗日插值法</h3><p>直观，巧妙，易于理解的插值算法<br>$$<br>P_{n-1}(x)&#x3D;\sum_{i&#x3D;1}^{n}y_i\frac{\prod_{j&#x3D;1}^n(x-x_j)(x_i-x_i)}{\prod_{j&#x3D;1}^n(x_i-x_j)(x-x_i)}<br>$$</p>
+<h3 id="2-牛顿差商法"><a href="#2-牛顿差商法" class="headerlink" title="2.牛顿差商法"></a>2.牛顿差商法</h3><p>为了解决拉格朗日插值法不易插入新数据点的方法</p>
+<p>也比较巧妙，都从构造$（x_i,y_i）$单个数据点出发，正确性由范德蒙行列式保证<br>$$<br>P(x)&#x3D;f[x_1]+\frac{f[x_2]-f[x_1]}{x_2-x_1}(x-x_1)+\frac{\frac{f[x_3]-f[x_2]}{x_3-x_2}-\frac{f[x_2]-f[x_1]}{x_2-x_1}}{x_3-x_1}(x-x_1)(x-x_2)\cdots<br>$$<br>牛顿差商表：</p>
+<table>
+<thead>
+<tr>
+<th align="center">横坐标</th>
+<th align="center">纵坐标</th>
+<th align="center">一阶差商</th>
+<th align="center">二阶差商</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">$x_1$</td>
+<td align="center">$f[x_1]$</td>
+<td align="center">$f[x_1,x_2]$</td>
+<td align="center">$f[x_1x_2x_3]$</td>
+</tr>
+<tr>
+<td align="center">$x_2$</td>
+<td align="center">$f[x_2]$</td>
+<td align="center">$f[x_2x_3]$</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">$x_3$</td>
+<td align="center">$f[x_3]$</td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<p>matlab代码</p>
+<figure class="highlight apache"><table><tr><td class="code"><pre><span class="line"><span class="attribute">function</span> c=newtdd(x,y,n)</span><br><span class="line">	<span class="attribute">for</span> j=<span class="number">1</span>:n</span><br><span class="line">		<span class="attribute">v</span>(j,<span class="number">1</span>)=y(j);</span><br><span class="line">	<span class="attribute">end</span></span><br><span class="line">	<span class="attribute">for</span> i=<span class="number">2</span>:n</span><br><span class="line">		<span class="attribute">for</span> j=<span class="number">1</span>:n+<span class="number">1</span>-i</span><br><span class="line">			<span class="attribute">v</span>(j,i)=(v(j+<span class="number">1</span>,i-<span class="number">1</span>)-v(j-<span class="number">1</span>,i-<span class="number">1</span>))/(x(j+i-<span class="number">1</span>)-x(j));</span><br><span class="line">		<span class="attribute">end</span></span><br><span class="line">	<span class="attribute">end</span></span><br><span class="line">	<span class="attribute">for</span> I=<span class="number">1</span>:n</span><br><span class="line">		<span class="attribute">c</span>(i)=c(<span class="number">1</span>,i);</span><br><span class="line">	<span class="attribute">end</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-切比雪夫差商"><a href="#3-切比雪夫差商" class="headerlink" title="3.切比雪夫差商"></a>3.切比雪夫差商</h3><p>插值误差公式：<br>$$<br>f(x)-P(x)&#x3D;\frac{(x-x_1)(x-x_2)\cdots(x-x_n)}{n!}f^{(n)}(c)<br>$$<br>优化数据点位置：<br>$$<br>x_i&#x3D;\frac{b+a}{2}+\frac{b-a}{2}cos(\frac{(2i-1)\pi}{2n})<br>$$</p>
+<h2 id="三次样条"><a href="#三次样条" class="headerlink" title="三次样条"></a>三次样条</h2><p>区别与一般多项式插值的一种办法，在不同区间上使用不同多项式函数组成的分段函数，仅仅考虑不同函数连接处的连续性。一般使用三次函数进行插值，具有如下条件：<br>$$<br>性质1：S_i(x_i)&#x3D;y_i,S_i(x_{i+1})&#x3D;y_{i+1}\<br>性质2：S’<em>{i-1}(x_i)&#x3D;S’</em>{i}(x_i)\<br>性质3：S’’<em>{i-1}(x_i)&#x3D;S’’</em>{i}(x_i)</p>
+<p>$$<br>此时方程数目仍然不够，需要其他条件，例如：自然样条，抛物线端点样条，非扭结三次样条</p>
+<p>函数为$a_i+b_ix+c_ix^2+d_ix^3$</p>
+<p>有以下四组方程：</p>
+<p>n-1个零阶方程：$y_n&#x3D;y_{n-1}+b_{n-1}(x_n-x_{n-1})+c_{n-1}(x_n-x_{n-1})^2+d_{n-1}(x_n-x_{n-1})^3$</p>
+<p>n-2个一阶方程:$b_{n-1}&#x3D;b_{n-2}+2c_{n-2}(x_{n-1}-x_{n-2})+3d_{n-2}(x_{n-1}-x_{n-2})^2$</p>
+<p>n-2个二阶条件$2c_{n-1}&#x3D;2c_{n-2}+6d_{n-2}(x_{n-1}-x_{n-2})$</p>
+<p>还有两个额外条件，为了方便计算引入：<br>$$<br>c_n&#x3D;\frac{S_{n-1}’’(x_n)}{2}\quad\delta_i&#x3D;x_{i+1}-x_{i}\quad \Delta_i&#x3D;y_{i+1}-y_{i}<br>$$<br>将b和d转化为c的函数表达式再求解c:<br>$$<br>d_i&#x3D;\frac{c_{i+1}-c_{i}}{3\delta_i}\qquad b_i&#x3D;\frac{\Delta_{i}}{\delta_i}-\frac{\delta_i}{3}(2c_i+c_{i+1})<br>$$<br>再用一阶方程组成矩阵形式：</p>
+<h3 id="自然样条"><a href="#自然样条" class="headerlink" title="自然样条"></a>自然样条</h3><p>此时额外条件为$c_1&#x3D;0，c_n&#x3D;0$<br>$$<br>\begin{bmatrix}<br>{1}&amp;{0}&amp;{0}&amp;{}&amp;{}\<br>{\delta_1}&amp;{2\delta_1+2\delta_2}&amp;{\delta_2}&amp;{\ddots}&amp;{}\<br>{0}&amp;{\delta_2}&amp;{2\delta_2+2\delta_3}&amp;{\delta_3}&amp;{\ddots}\<br>{}&amp;{}&amp;{}&amp;{\ddots}&amp;{\ddots}\<br>{}&amp;{}&amp;{}&amp;{0}&amp;{0}&amp;{1}\<br>\end{bmatrix}<br>\begin{bmatrix}<br>c_1\<br>\<br>\vdots\<br>\vdots\<br>\<br>c_n<br>\end{bmatrix}&#x3D;<br>\begin{bmatrix}<br>0\<br>3(\frac{\Delta_2}{\delta_2}-\frac{\Delta_1}{\delta_1})\<br>\vdots\<br>3(\frac{\Delta_{(n-1)}}{\delta_{n-1}}-\frac{\Delta_{n-2}}{\delta_{n-2}})\<br>0\<br>\end{bmatrix}<br>$$</p>
+<h3 id="抛物线端点"><a href="#抛物线端点" class="headerlink" title="抛物线端点"></a>抛物线端点</h3><p>此时条件为$d_1&#x3D;0&#x3D;d_{n-1}$</p>
+<p>并且可以进一步有$c_1&#x3D;c_2\quad c_{n-1}&#x3D;c_n$</p>
+<p>此时方程变成<br>$$<br>\begin{bmatrix}<br>{1}&amp;{-1}&amp;{0}&amp;{}&amp;{}\<br>{\delta_1}&amp;{2\delta_1+2\delta_2}&amp;{\delta_2}&amp;{\ddots}&amp;{}\<br>{0}&amp;{\delta_2}&amp;{2\delta_2+2\delta_3}&amp;{\delta_3}&amp;{\ddots}\<br>{}&amp;{}&amp;{}&amp;{\ddots}&amp;{\ddots}\<br>{}&amp;{}&amp;{}&amp;{0}&amp;{1}&amp;{-1}\<br>\end{bmatrix}<br>\begin{bmatrix}<br>c_1\<br>\<br>\vdots\<br>\vdots\<br>\<br>c_n<br>\end{bmatrix}&#x3D;<br>\begin{bmatrix}<br>0\<br>3(\frac{\Delta_2}{\delta_2}-\frac{\Delta_1}{\delta_1})\<br>\vdots\<br>3(\frac{\Delta_{(n-1)}}{\delta_{n-1}}-\frac{\Delta_{n-2}}{\delta_{n-2}})\<br>0\<br>\end{bmatrix}<br>$$</p>
+<h3 id="非扭结三次样条"><a href="#非扭结三次样条" class="headerlink" title="非扭结三次样条"></a>非扭结三次样条</h3><p>此时加入条件为$d_1&#x3D;d_2\quad d_{n-1}&#x3D;d_{n-2}$</p>
+<p>进一步有$S_1&#x3D;S_2\quad S_{n-2}&#x3D;S_{n-1}$<br>$$<br>\begin{bmatrix}<br>{\delta_2}&amp;{-(\delta_1+\delta_2)}&amp;{\delta_1}&amp;{}&amp;{}\<br>{\delta_1}&amp;{2\delta_1+2\delta_2}&amp;{\delta_2}&amp;{\ddots}&amp;{}\<br>{0}&amp;{\delta_2}&amp;{2\delta_2+2\delta_3}&amp;{\delta_3}&amp;{\ddots}\<br>{}&amp;{}&amp;{}&amp;{\ddots}&amp;{\ddots}\<br>{}&amp;{}&amp;{}&amp;{\delta{n-1}}&amp;{-(\delta_{n-2}+\delta_{n-1})}&amp;{\delta_{n-2}}\<br>\end{bmatrix}<br>\begin{bmatrix}<br>c_1\<br>\<br>\vdots\<br>\vdots\<br>\<br>c_n<br>\end{bmatrix}&#x3D;<br>\begin{bmatrix}<br>0\<br>3(\frac{\Delta_2}{\delta_2}-\frac{\Delta_1}{\delta_1})\<br>\vdots\<br>3(\frac{\Delta_{(n-1)}}{\delta_{n-1}}-\frac{\Delta_{n-2}}{\delta_{n-2}})\<br>0\<br>\end{bmatrix}<br>$$</p>
+<h2 id="贝塞尔函数"><a href="#贝塞尔函数" class="headerlink" title="贝塞尔函数"></a>贝塞尔函数</h2><p>牺牲了一二阶导数的平滑性来提供对斜率的控制，不过仅仅适用于一二阶导数连续的情况。</p>
+<p>每一段贝塞尔函数由四个点决定，端点和控制点，用参数形式表示：<br>$$<br>端点(x_1,y_1)，(x_4,y_4)\<br>控制点(x_2,y_2)，(x_3,y_3)\</p>
+<p>b_x&#x3D;c(x_2-x_1)\<br>c_x&#x3D;3(x_2-x_1)-b_x\<br>d_x&#x3D;x_4-x_1-b_x-c_x\<br>在定义0\leq t\leq 1的贝塞尔函数为\<br>x(t)&#x3D;x_1+b_xt+c_xt^2+d_xt^3\<br>y(t)&#x3D;y_1+b_yt+c_yt^2+d_yt^3<br>$$</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://fengbu-jue.github.io/2022/04/05/%E7%AC%AC%E4%BA%8C%E7%AB%A0.%E6%96%B9%E7%A8%8B%E6%B1%82%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/smile.jpg">
+      <meta itemprop="name" content="FengBu-jue">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/05/%E7%AC%AC%E4%BA%8C%E7%AB%A0.%E6%96%B9%E7%A8%8B%E6%B1%82%E8%A7%A3/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-04-05 18:23:19 / 修改时间：18:23:49" itemprop="dateCreated datePublished" datetime="2022-04-05T18:23:19+08:00">2022-04-05</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <hr>
+<h2 id="title：-Chapter-1-求解方程"><a href="#title：-Chapter-1-求解方程" class="headerlink" title="title： Chapter 1    求解方程"></a>title： Chapter 1    求解方程</h2><p>##前言</p>
+<p>作为一个应用型很强的方法型章节，就不用纵向的发展解释了，横向比较更为方便记忆。</p>
+<p>衡量一个求解方程的方法过程无异于一下几点：</p>
+<p>###是否真的可以求解</p>
+<p>​    局部收敛性</p>
+<p>###逼近解的速度多块</p>
+<pre><code> 线性收敛与超线性收敛
+</code></pre>
+<p>###得到的解有多准</p>
+<p>​    a.前项误差$|r-x_a|$</p>
+<p>​    b.后向误差$|f(x_a)|$</p>
+<p>​    c.敏感性问题</p>
+<p>​        $\Delta r\approx -\frac{\varepsilon g(r)}{f’(x)}$</p>
+<p>​         误差放大因子&#x3D;相对前向误差&#x2F;相对后向误差$\frac{|g(r)|}{|rf’(r)|}$</p>
+<p>​         条件数:最大误差放大，条件数在1附近为良性问题</p>
+<p>##具体方法</p>
+<h3 id="二分法"><a href="#二分法" class="headerlink" title="二分法"></a>二分法</h3><figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">xc</span>=<span class="title">bisect</span><span class="params">(f,a,b,tol)</span></span></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">sign</span>(f(a))*<span class="built_in">sign</span>(f(b))&gt;=<span class="number">0</span></span><br><span class="line">	error(<span class="string">&#x27;f(a)*f(b)&lt;0 is not satisfied&#x27;</span>)</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">fa=f(a);</span><br><span class="line">fb=f(b);</span><br><span class="line"><span class="keyword">while</span> (b-a)/<span class="number">2</span>&gt;tol</span><br><span class="line">	c=(a+b)/<span class="number">2</span>;</span><br><span class="line">	fc=f(c);</span><br><span class="line">	<span class="keyword">if</span> fc==<span class="number">0</span></span><br><span class="line">		<span class="keyword">break</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">sign</span>(f(a))*<span class="built_in">sign</span>(f(c))&lt;<span class="number">0</span></span><br><span class="line">	b=c;fb=fc;</span><br><span class="line">   <span class="keyword">else</span></span><br><span class="line">   	a=c,fa=fc;</span><br><span class="line">   	<span class="keyword">end</span></span><br><span class="line">   <span class="keyword">end</span></span><br><span class="line">xc=(a+b)/<span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<p>a.首先二分法在满足f(a)f(b)&lt;0的条件时是一定可以获得一个解的</p>
+<p>b.然后趋近解的速度是一个线性速度，以0.5的速度线性收敛</p>
+<p>c.关于误差的分析我们可以得到<br>$$<br>求解误差&#x3D;|x_c-r|&lt;\frac{b-a}{2^{n+1}}<br>$$<br>此时函数的计算次数为n+2次</p>
+<h3 id="不动点迭代"><a href="#不动点迭代" class="headerlink" title="不动点迭代"></a>不动点迭代</h3><figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">fpi</span><span class="params">(g,x0,k)</span></span></span><br><span class="line">x(<span class="number">1</span>)=x0;</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span>=<span class="number">1</span>:k</span><br><span class="line">	x(<span class="built_in">i</span>+<span class="number">1</span>)=g(x(<span class="built_in">i</span>));</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">xc=x(k+<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>a.二分法在|f’(r)|&lt;1时可以得到解，称作局部收敛</p>
+<p>b.收敛速度为|f’(r)|的线性收敛速度</p>
+<h3 id="牛顿迭代"><a href="#牛顿迭代" class="headerlink" title="牛顿迭代"></a>牛顿迭代</h3><figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">NRm</span><span class="params">(g,x0,k)</span></span></span><br><span class="line">x(<span class="number">1</span>)=x0;</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span>=<span class="number">1</span>:k</span><br><span class="line">	x(<span class="built_in">i</span>+<span class="number">1</span>)=x(<span class="built_in">i</span>)-f(xi)/diff(f(xi))</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">xc=x(k+<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<p>收敛速度：<br>a.当f’(r)$\neq$0时，可以有超线性的收敛速度：<br>$$<br>M&#x3D;\lim\limits_{x\rightarrow \infin}\frac{e_{i+1}}{e_i^2}&#x3D;\frac{f’’(r)}{2f’(r)}<br>$$<br>b.当f’(r)&#x3D;0时，退回线性收敛速度</p>
+<p>对于m阶连续可微函数f在r点有m阶多重根，则线性收敛S&#x3D;(m-1)&#x2F;m</p>
+<p>不过进行改进的牛顿方法：<br>$$<br>x_{i+1}&#x3D;x_i-\frac{mf(x_i)}{f’(x_i)}<br>$$<br>可以再次回到二次收敛速度，不过m这个阶数好像也不太好求。</p>
+<p>###不求导的简化牛顿迭代</p>
+<h4 id="割线法"><a href="#割线法" class="headerlink" title="割线法"></a>割线法</h4><p>求导操作还是有一些运算量的，可以近似用割线代替求导操作<br>$$<br>x_{i+1}&#x3D;x{i}-\frac{f(x_i)(x_i-x_{i-1})}{f(x_i)-f(x_{i-1})}<br>$$<br>此时仍然有着超线性的收敛速度，$\alpha &#x3D;(1+\sqrt5)&#x2F;2$</p>
+<h4 id="试位方法（Regular-Falsi）"><a href="#试位方法（Regular-Falsi）" class="headerlink" title="试位方法（Regular Falsi）"></a>试位方法（Regular Falsi）</h4><p>结合割线法和二分法的优点</p>
+<h4 id="Muller方法和IOI-逆二次插值"><a href="#Muller方法和IOI-逆二次插值" class="headerlink" title="Muller方法和IOI(逆二次插值)"></a>Muller方法和IOI(逆二次插值)</h4><p>收敛速度1.84，大于割线法</p>
+<h4 id="Brent方法"><a href="#Brent方法" class="headerlink" title="Brent方法"></a>Brent方法</h4><p>混合兽</p>
+<hr>
+<p>###割线方法收敛速度的证明</p>
+<p>$$<br>p(n)&#x3D;p(n-1)-\frac{f(p_{n-1})(p_{n-1}-p_{n-2})}{f(p_{n-1})-f(p_{n-2}))}\<br>变形可得到：<br>\frac{p(n)-p}{(p_{n-1}-p)(p_{n-2}-p)}&#x3D;\frac{f’’(x)}{2f’(x)}\<br>假设收敛阶为\alpha, \lim\limits_{x\rightarrow \infin}\frac{|p_n-p|}{|p_{n-1}-p|^\alpha}&#x3D;\lambda\<br>\lim\limits_{x\rightarrow\infin}\frac{|p_n-p|}{|p_{n-1}-p||p_{n-2}-p|^{\alpha(\alpha-1)}}<br>此时可以获得方程\alpha(\alpha-1)\geq0<br>$$</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://fengbu-jue.github.io/2022/04/05/%E7%AC%AC%E4%B8%80%E7%AB%A0.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/smile.jpg">
+      <meta itemprop="name" content="FengBu-jue">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2022/04/05/%E7%AC%AC%E4%B8%80%E7%AB%A0.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-04-05 18:23:16 / 修改时间：18:24:25" itemprop="dateCreated datePublished" datetime="2022-04-05T18:23:16+08:00">2022-04-05</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <hr>
+<h2 id="title：-Chapter-0-数值分析基础知识"><a href="#title：-Chapter-0-数值分析基础知识" class="headerlink" title="title： Chapter 0      数值分析基础知识"></a>title： Chapter 0      数值分析基础知识</h2><h2 id="多项式求值"><a href="#多项式求值" class="headerlink" title="多项式求值"></a>多项式求值</h2><p>最优方法：嵌套方法（霍纳方法）</p>
 <p>复杂度分析：d阶多项式对应了d此乘法与d次加法</p>
 <p>而直接进行运算的次数是d次加法和O($n^2$)次加法，显著减少了乘法的运算数目。</p>
 <p>而且式子没有变形运算成本，对于多项式$P(x)_n&#x3D;a_0+a_1\times x+…a_n\times x^n$可以直接写出<br>$$<br>P(x)_n&#x3D;a_0+x(a_1+x(a_2+…(x(a_n))…))<br>$$</p>
@@ -248,76 +458,6 @@
 <p>其中$e_1\cdots e_{11}$为指数位， 覆盖了1到2046之间，再减去1023得到实际表示的指数，在-1022到1023之间。</p>
 <p>最后面52位表示尾数。</p>
 <p>例如数字1，用浮点数表示：<br>$$<br>1&#x3D;+1.000\cdots 000\times 2^0<br>$$<br>用机器表示就是：<br>$$<br>|0|01111111111|0000\cdots 0000|<br>$$<br>第一个零表示正号，后面十一位数字为1023，减去1023得到0说明指数为零。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://fengbu-jue.github.io/2022/04/01/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/smile.jpg">
-      <meta itemprop="name" content="FengBu-jue">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="博客">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/04/01/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-04-01 15:23:16" itemprop="dateCreated datePublished" datetime="2022-04-01T15:23:16+08:00">2022-04-01</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 
       
     </div>
@@ -401,7 +541,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">2</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
