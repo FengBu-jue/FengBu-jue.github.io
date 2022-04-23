@@ -20,19 +20,19 @@
     var CONFIG = {"hostname":"fengbu-jue.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="多项式求值最优方法：嵌套方法（霍纳方法） 复杂度分析：d阶多项式对应了d此乘法与d次加法 而直接进行运算的次数是d次加法和O($n^2$)次加法，显著减少了乘法的运算数目。 而且式子没有变形运算成本，对于多项式$P(x)_n&#x3D;a_0+a_1\times x+…a_n\times x^n$可以直接写出  P(x)_n&#x3D;a_0+x(a_1+x(a_2+...(x(a_n))...))为了方便计算可以写">
+  <meta name="description" content="数值微分有限差分公式通过有限差分来近似微分 二点向前差分公式  f&#39;(x)&#x3D;\frac{f(x+h)-f(x)}{h}-\frac{h}{2}f&#39;&#39;(x)三点中心差分公式  f&#39;(x)&#x3D;\frac{f(x+h)-f(x-h)}{2h}-\frac{h^2}{6}f&#39;&#39;&#39;(c)二阶导数的三点中心差分公式  f&#39;&#39;(x)&#x3D;\frac{f(x+h)+f(x-h)-2f(x)}{h^2}-\frac{h^">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Chapter 0 数值分析基础知识">
-<meta property="og:url" content="https://fengbu-jue.github.io/2022/04/06/%E7%AC%AC%E4%B8%80%E7%AB%A0.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/index.html">
+<meta property="og:title" content="Chapter 6  数值微分与积分">
+<meta property="og:url" content="https://fengbu-jue.github.io/2022/04/23/%E7%AC%AC%E5%85%AD%E7%AB%A0.%E6%95%B0%E5%80%BC%E5%BE%AE%E5%88%86%E7%A7%AF%E5%88%86/index.html">
 <meta property="og:site_name" content="珏的第一款博客捏">
-<meta property="og:description" content="多项式求值最优方法：嵌套方法（霍纳方法） 复杂度分析：d阶多项式对应了d此乘法与d次加法 而直接进行运算的次数是d次加法和O($n^2$)次加法，显著减少了乘法的运算数目。 而且式子没有变形运算成本，对于多项式$P(x)_n&#x3D;a_0+a_1\times x+…a_n\times x^n$可以直接写出  P(x)_n&#x3D;a_0+x(a_1+x(a_2+...(x(a_n))...))为了方便计算可以写">
+<meta property="og:description" content="数值微分有限差分公式通过有限差分来近似微分 二点向前差分公式  f&#39;(x)&#x3D;\frac{f(x+h)-f(x)}{h}-\frac{h}{2}f&#39;&#39;(x)三点中心差分公式  f&#39;(x)&#x3D;\frac{f(x+h)-f(x-h)}{2h}-\frac{h^2}{6}f&#39;&#39;&#39;(c)二阶导数的三点中心差分公式  f&#39;&#39;(x)&#x3D;\frac{f(x+h)+f(x-h)-2f(x)}{h^2}-\frac{h^">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-04-05T16:30:19.248Z">
-<meta property="article:modified_time" content="2022-04-05T16:48:44.716Z">
+<meta property="article:published_time" content="2022-04-23T13:50:59.771Z">
+<meta property="article:modified_time" content="2022-04-23T13:51:36.184Z">
 <meta property="article:author" content="FengBu-jue">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://fengbu-jue.github.io/2022/04/06/%E7%AC%AC%E4%B8%80%E7%AB%A0.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+<link rel="canonical" href="https://fengbu-jue.github.io/2022/04/23/%E7%AC%AC%E5%85%AD%E7%AB%A0.%E6%95%B0%E5%80%BC%E5%BE%AE%E5%88%86%E7%A7%AF%E5%88%86/">
 
 
 <script id="page-configurations">
@@ -45,7 +45,7 @@
   };
 </script>
 
-  <title>Chapter 0 数值分析基础知识 | 珏的第一款博客捏</title>
+  <title>Chapter 6  数值微分与积分 | 珏的第一款博客捏</title>
   
 
 
@@ -166,7 +166,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://fengbu-jue.github.io/2022/04/06/%E7%AC%AC%E4%B8%80%E7%AB%A0.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+    <link itemprop="mainEntityOfPage" href="https://fengbu-jue.github.io/2022/04/23/%E7%AC%AC%E5%85%AD%E7%AB%A0.%E6%95%B0%E5%80%BC%E5%BE%AE%E5%88%86%E7%A7%AF%E5%88%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/smile.jpg">
@@ -179,7 +179,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Chapter 0 数值分析基础知识
+          Chapter 6  数值微分与积分
         </h1>
 
         <div class="post-meta">
@@ -190,7 +190,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-04-06 00:30:19 / 修改时间：00:48:44" itemprop="dateCreated datePublished" datetime="2022-04-06T00:30:19+08:00">2022-04-06</time>
+              <time title="创建时间：2022-04-23 21:50:59 / 修改时间：21:51:36" itemprop="dateCreated datePublished" datetime="2022-04-23T21:50:59+08:00">2022-04-23</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -213,88 +213,49 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="多项式求值"><a href="#多项式求值" class="headerlink" title="多项式求值"></a>多项式求值</h2><p>最优方法：嵌套方法（霍纳方法）</p>
-<p>复杂度分析：d阶多项式对应了d此乘法与d次加法</p>
-<p>而直接进行运算的次数是d次加法和O($n^2$)次加法，显著减少了乘法的运算数目。</p>
-<p>而且式子没有变形运算成本，对于多项式$P(x)_n=a_0+a_1\times x+…a_n\times x^n$可以直接写出</p>
+        <h2 id="数值微分"><a href="#数值微分" class="headerlink" title="数值微分"></a>数值微分</h2><h3 id="有限差分公式"><a href="#有限差分公式" class="headerlink" title="有限差分公式"></a>有限差分公式</h3><p>通过有限差分来近似微分</p>
+<p>二点向前差分公式</p>
 <script type="math/tex; mode=display">
-P(x)_n=a_0+x(a_1+x(a_2+...(x(a_n))...))</script><p>为了方便计算可以写出一个matlab程序nest</p>
-<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">y</span>=<span class="title">nest</span><span class="params">(d,c,x,b)</span></span></span><br><span class="line"><span class="keyword">if</span> nargin&lt;<span class="number">4</span>,b=<span class="built_in">zeros</span>(d,<span class="number">1</span>);<span class="keyword">end</span>	\\nargin means number of input <span class="keyword">arguments</span></span><br><span class="line">y=c(d+<span class="number">1</span>);</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span>=d:<span class="number">-1</span>:<span class="number">1</span></span><br><span class="line">	y=y.*(x-b(<span class="built_in">i</span>))+c(<span class="built_in">i</span>);</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-<h2 id="二进制数字"><a href="#二进制数字" class="headerlink" title="二进制数字"></a>二进制数字</h2><h3 id="十进制转化为二进制"><a href="#十进制转化为二进制" class="headerlink" title="十进制转化为二进制"></a>十进制转化为二进制</h3><p>慢慢找二进制的最大位数再减去，当然保留这个寻找的过程可以直接写出数字变换，例如：$(53)_{10}$</p>
+f'(x)=\frac{f(x+h)-f(x)}{h}-\frac{h}{2}f''(x)</script><p>三点中心差分公式</p>
 <script type="math/tex; mode=display">
-53\div2=26\cdots1\\
-26\div2=13\cdots0\\
-13\div2=6\cdots1\\
-6\div2=3\cdots0\\
-3\div2=1\cdots1\\
-1\div2=0\cdots1\\</script><p>直接有$(53)_10=(110101)_2$</p>
-<p>同理反过来有小数部分，例如$(0.7)_10$</p>
+f'(x)=\frac{f(x+h)-f(x-h)}{2h}-\frac{h^2}{6}f'''(c)</script><p>二阶导数的三点中心差分公式</p>
 <script type="math/tex; mode=display">
-0.7\times2=0.4+1\\
-0.4\times2=0.8+0\\
-0.8\times2=0.6+1\\
-0.6\times2=0.2+1\\
-0.2\times2=0.4+0\\</script><p>至此开始循环$(0.7)_10=(0.1\overline{0110})_2$</p>
-<h3 id="二进制转化为十进制"><a href="#二进制转化为十进制" class="headerlink" title="二进制转化为十进制"></a>二进制转化为十进制</h3><h4 id="不循环数字"><a href="#不循环数字" class="headerlink" title="不循环数字"></a>不循环数字</h4><p>洒洒水啦，以2为基展开求和。例如$(10101)_2$</p>
+f''(x)=\frac{f(x+h)+f(x-h)-2f(x)}{h^2}-\frac{h^2}{12}f^{4}(c)</script><h3 id="舍入误差"><a href="#舍入误差" class="headerlink" title="舍入误差"></a>舍入误差</h3><p>误差$E\equiv \frac{h^2}{6}f’’’(x)+\frac{\epsilon_{math}}{h}$</p>
+<p>意味着当h变得过于小的时候误差会回弹变大</p>
+<h3 id="外推"><a href="#外推" class="headerlink" title="外推"></a>外推</h3><p>假设n阶公式F(h)近似于Q，则意味着：</p>
 <script type="math/tex; mode=display">
-1\times 2^4+0\times 2^3+1\times 2^1+1\times 2^0=(21)_{10}</script><h3 id="无限循环数字"><a href="#无限循环数字" class="headerlink" title="无限循环数字"></a>无限循环数字</h3><p>简单的相消即可，唯一要注意的是注意乘上去的系数是十进制还是二进制，例如$(0.\overline{1011})_2$</p>
+    Q\approx F(h)+Kh^n</script><p>有</p>
 <script type="math/tex; mode=display">
-2^4 \times x=1011.\overline{1011}\\
-x=0.\overline{1011}\\
-(2^4-1)\times x=(1011)_2=(11)_{10}</script><h3 id="简单提一嘴十六进制"><a href="#简单提一嘴十六进制" class="headerlink" title="简单提一嘴十六进制"></a>简单提一嘴十六进制</h3><p>每个十六进制数可以用四个二进制数字进行表示，且每个数字均有数字或字母表述：0，1，2，3，$\cdots$</p>
-<p>，A(10)，B(11)，C(12)，D(13)，E(14)，F(15)。</p>
-<h2 id="实数的浮点数表述"><a href="#实数的浮点数表述" class="headerlink" title="实数的浮点数表述"></a>实数的浮点数表述</h2><h3 id="浮点格式"><a href="#浮点格式" class="headerlink" title="浮点格式"></a>浮点格式</h3><p>一个浮点数由三个部分组成：符号，尾数，指数。</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>精度</th>
-<th>符号</th>
-<th>指数</th>
-<th>尾数</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>单精度</td>
-<td>1</td>
-<td>8</td>
-<td>23</td>
-</tr>
-<tr>
-<td>双精度</td>
-<td>1</td>
-<td>11</td>
-<td>52</td>
-</tr>
-<tr>
-<td>长双精度</td>
-<td>1</td>
-<td>15</td>
-<td>64</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>标准化的$\textbf{IEEE}$浮点数表示为：</p>
+Q-F(\frac{h}{2}) \approx \frac{1}{2^n}(Q-F(h))</script><p>得到n阶公式外推：</p>
 <script type="math/tex; mode=display">
-\pm 1.bbb\cdots b \times2^p</script><p>该数字全部为二进制数字，后面的$2^p$用来将前面的数字调整至1.开头，例如$(9)_{10}$，表示为</p>
+Q \approx \frac{2^nF(h/2)-F()h}{2^n-1}</script><p>可以将误差提升一阶</p>
+<h2 id="牛顿-斯科特公式"><a href="#牛顿-斯科特公式" class="headerlink" title="牛顿-斯科特公式"></a>牛顿-斯科特公式</h2><h4 id="Define-代数精度"><a href="#Define-代数精度" class="headerlink" title="Define 代数精度"></a>Define 代数精度</h4><p>最大整数k使得数值积分方法对所有的k阶或更低阶多项式积分是精确的，称为k阶（代数）精度</p>
+<p>例如：梯形法则为1，辛普森法则为3</p>
+<h3 id="梯形法则"><a href="#梯形法则" class="headerlink" title="梯形法则"></a>梯形法则</h3><p>对于[$x_1,x_2$]中的f(x)积分直接用$\frac{f(x_1)+f(x_2)}{2}(x_2-x_1)$近似，由泰勒展开得到</p>
 <script type="math/tex; mode=display">
-+1.001\times 2^3</script><p>虽然说对于双精度来说有整整52位尾数，但是表示数字还是会有误差，最小误差单位定义为机器精度$\varepsilon_{math}=2^{-52}$</p>
-<h4 id="IEEE舍入"><a href="#IEEE舍入" class="headerlink" title="IEEE舍入"></a>IEEE舍入</h4><p>一般而言53位凑0，除非53位为1且之后位数全部为0，此时52位凑0。</p>
-<p>$\textbf{IEEE}$机器算数模型中，fl(x)的相对舍入误差有上限：</p>
+\int_{x_0}^{x_1}f(x)dx=\frac{h}{2}(y_0+y_1)-\frac{h^3}{12}f''(c)</script><h3 id="辛普森法则"><a href="#辛普森法则" class="headerlink" title="辛普森法则"></a>辛普森法则</h3><p>对于[$x_0,x_2$]中的f(x)积分取三个点作抛物线积分近似，由泰勒展开</p>
 <script type="math/tex; mode=display">
-\frac{|fl(x)-x|}{|x|}\leq \frac{1}{2} \varepsilon_{math}</script><h4 id="机器表示"><a href="#机器表示" class="headerlink" title="机器表示"></a>机器表示</h4><p>一个双精度浮点数会分配到8字节即使64位数字，有如下格式</p>
+\int_{x_0}^{x_2}f(x)dx=\frac{h}{3}(y_0+4y_1+y_2)-\frac{h^5}{90}f^{4}(c)</script><h3 id="复合方法"><a href="#复合方法" class="headerlink" title="复合方法"></a>复合方法</h3><p>复合梯形法则：</p>
 <script type="math/tex; mode=display">
-se_1e_2\cdots e_{11}b_1b_2\cdots b_{52}</script><p>其中$s$为符号位，0表示正数，1表示负数。</p>
-<p>其中$e_1\cdots e_{11}$为指数位， 覆盖了1到2046之间，再减去1023得到实际表示的指数，在-1022到1023之间。</p>
-<p>最后面52位表示尾数。</p>
-<p>例如数字1，用浮点数表示： </p>
+\int_a^bf(x)dx=\frac{h}{2}(y_0+y_m+2\sum y_i)-\frac{(b-a)h^2}{12}f''(c)</script><p> 复合辛普森法则：</p>
 <script type="math/tex; mode=display">
-1=+1.000\cdots 000\times 2^0</script><p>用机器表示就是：</p>
+\int_a^bf(x)dx=\frac{h}{3}[y_0+y_{2m}+4\sum_{i=1}^{m}y_{2i-1}+2\sum_{i=1}^{m-1}y_{2i}]-\frac{(b-a)^4}{180}f^4(c)</script><h3 id="开方法"><a href="#开方法" class="headerlink" title="开方法"></a>开方法</h3><p>复合中点法则</p>
 <script type="math/tex; mode=display">
-|0|01111111111|0000\cdots 0000|</script><p>第一个零表示正号，后面十一位数字为1023，减去1023得到0说明指数为零。</p>
+\int_a^bf(x)dx=h\sum f(w_i)+\frac{(b-a)h^2}{24}f''(c)</script><h2 id="龙贝格积分"><a href="#龙贝格积分" class="headerlink" title="龙贝格积分"></a>龙贝格积分</h2><p>将梯形法则的细分和外推结合起来得到构造表：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+&R_{11}\\
+&R_{21}\quad R_{22}\\
+&R_{31}\quad R_{32}\quad R_{33}\\
+&\vdots\qquad\qquad\qquad \ddots 
+\end{aligned}</script><p>有递推公式:</p>
+<script type="math/tex; mode=display">
+R_{ij}=\frac{4^{k-1}R_{j,k-1}-R_{j-1,k-1}}{4^{k-1}-1}</script><h2 id="自适应积分"><a href="#自适应积分" class="headerlink" title="自适应积分"></a>自适应积分</h2><p>根据函数形式调整区间大小来优化误差和计算量</p>
+<script type="math/tex; mode=display">
+\int_a^bf(x)dx=S_[a,b]-h^3\frac{f''(c_0)}{12}\\
+=S[a,c]+S[c,b]-\frac{h^3f''(c_3)}{4}\\
+\therefore S[a,b]-S[a,c]-S[c,b]\approx3\times \frac{1}{4}h^3\frac{f''{（c_3）}}{12}\\
+与3TOL进行对比</script><h2 id="高斯积分"><a href="#高斯积分" class="headerlink" title="高斯积分"></a>高斯积分</h2><p>好累啊，不想写了</p>
 
     </div>
 
@@ -310,7 +271,7 @@ se_1e_2\cdots e_{11}b_1b_2\cdots b_{52}</script><p>其中$s$为符号位，0表�
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://fengbu-jue.github.io/2022/04/06/%E7%AC%AC%E4%B8%80%E7%AB%A0.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="Chapter 0 数值分析基础知识">https://fengbu-jue.github.io/2022/04/06/第一章.基础知识/</a>
+    <a href="https://fengbu-jue.github.io/2022/04/23/%E7%AC%AC%E5%85%AD%E7%AB%A0.%E6%95%B0%E5%80%BC%E5%BE%AE%E5%88%86%E7%A7%AF%E5%88%86/" title="Chapter 6  数值微分与积分">https://fengbu-jue.github.io/2022/04/23/第六章.数值微分积分/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -327,13 +288,10 @@ se_1e_2\cdots e_{11}b_1b_2\cdots b_{52}</script><p>其中$s$为符号位，0表�
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/04/06/%E7%AC%AC%E4%BA%8C%E7%AB%A0.%E6%96%B9%E7%A8%8B%E6%B1%82%E8%A7%A3/" rel="prev" title="Chapter 1	求解方程">
-      <i class="fa fa-chevron-left"></i> Chapter 1	求解方程
+    <a href="/2022/04/23/%E7%AC%AC%E4%BA%94%E7%AB%A0.%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95/" rel="prev" title="Chapter 5 最小二乘法">
+      <i class="fa fa-chevron-left"></i> Chapter 5 最小二乘法
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/04/23/%E7%AC%AC%E4%BA%94%E7%AB%A0.%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95/" rel="next" title="Chapter 5 最小二乘法">
-      Chapter 5 最小二乘法 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -392,7 +350,7 @@ se_1e_2\cdots e_{11}b_1b_2\cdots b_{52}</script><p>其中$s$为符号位，0表�
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E9%A1%B9%E5%BC%8F%E6%B1%82%E5%80%BC"><span class="nav-number">1.</span> <span class="nav-text">多项式求值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%95%B0%E5%AD%97"><span class="nav-number">2.</span> <span class="nav-text">二进制数字</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%81%E8%BF%9B%E5%88%B6%E8%BD%AC%E5%8C%96%E4%B8%BA%E4%BA%8C%E8%BF%9B%E5%88%B6"><span class="nav-number">2.1.</span> <span class="nav-text">十进制转化为二进制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E8%BD%AC%E5%8C%96%E4%B8%BA%E5%8D%81%E8%BF%9B%E5%88%B6"><span class="nav-number">2.2.</span> <span class="nav-text">二进制转化为十进制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8D%E5%BE%AA%E7%8E%AF%E6%95%B0%E5%AD%97"><span class="nav-number">2.2.1.</span> <span class="nav-text">不循环数字</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E9%99%90%E5%BE%AA%E7%8E%AF%E6%95%B0%E5%AD%97"><span class="nav-number">2.3.</span> <span class="nav-text">无限循环数字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E6%8F%90%E4%B8%80%E5%98%B4%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6"><span class="nav-number">2.4.</span> <span class="nav-text">简单提一嘴十六进制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E6%95%B0%E7%9A%84%E6%B5%AE%E7%82%B9%E6%95%B0%E8%A1%A8%E8%BF%B0"><span class="nav-number">3.</span> <span class="nav-text">实数的浮点数表述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%AE%E7%82%B9%E6%A0%BC%E5%BC%8F"><span class="nav-number">3.1.</span> <span class="nav-text">浮点格式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IEEE%E8%88%8D%E5%85%A5"><span class="nav-number">3.1.1.</span> <span class="nav-text">IEEE舍入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E8%A1%A8%E7%A4%BA"><span class="nav-number">3.1.2.</span> <span class="nav-text">机器表示</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E5%80%BC%E5%BE%AE%E5%88%86"><span class="nav-number">1.</span> <span class="nav-text">数值微分</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E9%99%90%E5%B7%AE%E5%88%86%E5%85%AC%E5%BC%8F"><span class="nav-number">1.1.</span> <span class="nav-text">有限差分公式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%88%8D%E5%85%A5%E8%AF%AF%E5%B7%AE"><span class="nav-number">1.2.</span> <span class="nav-text">舍入误差</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%96%E6%8E%A8"><span class="nav-number">1.3.</span> <span class="nav-text">外推</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%9B%E9%A1%BF-%E6%96%AF%E7%A7%91%E7%89%B9%E5%85%AC%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">牛顿-斯科特公式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Define-%E4%BB%A3%E6%95%B0%E7%B2%BE%E5%BA%A6"><span class="nav-number">2.0.1.</span> <span class="nav-text">Define 代数精度</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A2%AF%E5%BD%A2%E6%B3%95%E5%88%99"><span class="nav-number">2.1.</span> <span class="nav-text">梯形法则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%9B%E6%99%AE%E6%A3%AE%E6%B3%95%E5%88%99"><span class="nav-number">2.2.</span> <span class="nav-text">辛普森法则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E5%90%88%E6%96%B9%E6%B3%95"><span class="nav-number">2.3.</span> <span class="nav-text">复合方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E6%96%B9%E6%B3%95"><span class="nav-number">2.4.</span> <span class="nav-text">开方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%BE%99%E8%B4%9D%E6%A0%BC%E7%A7%AF%E5%88%86"><span class="nav-number">3.</span> <span class="nav-text">龙贝格积分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E9%80%82%E5%BA%94%E7%A7%AF%E5%88%86"><span class="nav-number">4.</span> <span class="nav-text">自适应积分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E6%96%AF%E7%A7%AF%E5%88%86"><span class="nav-number">5.</span> <span class="nav-text">高斯积分</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
