@@ -20,19 +20,19 @@
     var CONFIG = {"hostname":"fengbu-jue.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="多项式求值最优方法：嵌套方法（霍纳方法） 复杂度分析：d阶多项式对应了d此乘法与d次加法 而直接进行运算的次数是d次加法和O($n^2$)次加法，显著减少了乘法的运算数目。 而且式子没有变形运算成本，对于多项式$P(x)_n&#x3D;a_0+a_1\times x+…a_n\times x^n$可以直接写出  P(x)_n&#x3D;a_0+x(a_1+x(a_2+...(x(a_n))...))为了方便计算可以写">
+  <meta name="description" content="朴素的高斯消去法过程略。。。 复杂度分析：消去过程：$\frac{2}{3}n^3&#x3D;\frac{1}{2}n^2-\frac{6}{7}n$ 回代过程：$n^2$ LU分解和高斯消去一个意思，保留了消去的过程方便与对付系数矩阵不变的大量方程组。 复杂度：$\approx \frac{2}{3} n^3+2kn^2$ 误差分析无穷范数：对于向量x而言，其无穷范数$||x||_{\infin}$为其中">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Chapter 0 数值分析基础知识">
-<meta property="og:url" content="https://fengbu-jue.github.io/2022/04/06/%E7%AC%AC%E4%B8%80%E7%AB%A0.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/index.html">
+<meta property="og:title" content="Chapter 3   方程组求解">
+<meta property="og:url" content="https://fengbu-jue.github.io/2022/05/18/%E7%AC%AC%E4%B8%89%E7%AB%A0.%E6%96%B9%E7%A8%8B%E7%BB%84%E6%B1%82%E8%A7%A3/index.html">
 <meta property="og:site_name" content="珏的第一款博客捏">
-<meta property="og:description" content="多项式求值最优方法：嵌套方法（霍纳方法） 复杂度分析：d阶多项式对应了d此乘法与d次加法 而直接进行运算的次数是d次加法和O($n^2$)次加法，显著减少了乘法的运算数目。 而且式子没有变形运算成本，对于多项式$P(x)_n&#x3D;a_0+a_1\times x+…a_n\times x^n$可以直接写出  P(x)_n&#x3D;a_0+x(a_1+x(a_2+...(x(a_n))...))为了方便计算可以写">
+<meta property="og:description" content="朴素的高斯消去法过程略。。。 复杂度分析：消去过程：$\frac{2}{3}n^3&#x3D;\frac{1}{2}n^2-\frac{6}{7}n$ 回代过程：$n^2$ LU分解和高斯消去一个意思，保留了消去的过程方便与对付系数矩阵不变的大量方程组。 复杂度：$\approx \frac{2}{3} n^3+2kn^2$ 误差分析无穷范数：对于向量x而言，其无穷范数$||x||_{\infin}$为其中">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-04-05T16:30:19.248Z">
-<meta property="article:modified_time" content="2022-04-05T16:48:44.716Z">
+<meta property="article:published_time" content="2022-05-18T13:53:16.281Z">
+<meta property="article:modified_time" content="2022-05-18T13:54:10.919Z">
 <meta property="article:author" content="FengBu-jue">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://fengbu-jue.github.io/2022/04/06/%E7%AC%AC%E4%B8%80%E7%AB%A0.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+<link rel="canonical" href="https://fengbu-jue.github.io/2022/05/18/%E7%AC%AC%E4%B8%89%E7%AB%A0.%E6%96%B9%E7%A8%8B%E7%BB%84%E6%B1%82%E8%A7%A3/">
 
 
 <script id="page-configurations">
@@ -45,7 +45,7 @@
   };
 </script>
 
-  <title>Chapter 0 数值分析基础知识 | 珏的第一款博客捏</title>
+  <title>Chapter 3   方程组求解 | 珏的第一款博客捏</title>
   
 
 
@@ -166,7 +166,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://fengbu-jue.github.io/2022/04/06/%E7%AC%AC%E4%B8%80%E7%AB%A0.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">
+    <link itemprop="mainEntityOfPage" href="https://fengbu-jue.github.io/2022/05/18/%E7%AC%AC%E4%B8%89%E7%AB%A0.%E6%96%B9%E7%A8%8B%E7%BB%84%E6%B1%82%E8%A7%A3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/smile.png">
@@ -179,7 +179,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Chapter 0 数值分析基础知识
+          Chapter 3   方程组求解
         </h1>
 
         <div class="post-meta">
@@ -190,7 +190,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-04-06 00:30:19 / 修改时间：00:48:44" itemprop="dateCreated datePublished" datetime="2022-04-06T00:30:19+08:00">2022-04-06</time>
+              <time title="创建时间：2022-05-18 21:53:16 / 修改时间：21:54:10" itemprop="dateCreated datePublished" datetime="2022-05-18T21:53:16+08:00">2022-05-18</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -213,89 +213,42 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="多项式求值"><a href="#多项式求值" class="headerlink" title="多项式求值"></a>多项式求值</h2><p>最优方法：嵌套方法（霍纳方法）</p>
-<p>复杂度分析：d阶多项式对应了d此乘法与d次加法</p>
-<p>而直接进行运算的次数是d次加法和O($n^2$)次加法，显著减少了乘法的运算数目。</p>
-<p>而且式子没有变形运算成本，对于多项式$P(x)_n=a_0+a_1\times x+…a_n\times x^n$可以直接写出</p>
+        <h2 id="朴素的高斯消去法"><a href="#朴素的高斯消去法" class="headerlink" title="朴素的高斯消去法"></a>朴素的高斯消去法</h2><p>过程略。。。</p>
+<h3 id="复杂度分析："><a href="#复杂度分析：" class="headerlink" title="复杂度分析："></a>复杂度分析：</h3><p>消去过程：$\frac{2}{3}n^3=\frac{1}{2}n^2-\frac{6}{7}n$</p>
+<p>回代过程：$n^2$</p>
+<h2 id="LU分解"><a href="#LU分解" class="headerlink" title="LU分解"></a>LU分解</h2><p>和高斯消去一个意思，保留了消去的过程方便与对付系数矩阵不变的大量方程组。</p>
+<h3 id="复杂度："><a href="#复杂度：" class="headerlink" title="复杂度："></a>复杂度：</h3><p>$\approx \frac{2}{3} n^3+2kn^2$</p>
+<h2 id="误差分析"><a href="#误差分析" class="headerlink" title="误差分析"></a>误差分析</h2><h3 id="无穷范数："><a href="#无穷范数：" class="headerlink" title="无穷范数："></a>无穷范数：</h3><p>对于向量x而言，其无穷范数$||x||_{\infin}$为其中绝对值最大值。</p>
+<p>相对前向误差：$\frac{||x-x_a||_\infin}{||x||_\infin}$</p>
+<p>相对后向误差：$\frac{||r||_\infin}{||b||_\infin}$</p>
+<p>定义误差放大因子为：相对现象误差除以相对后向误差</p>
+<p>然后定义条件数 cond (A)为为对于所有b可能出现的最大误差放大因子。</p>
+<p>且$cond(A)=||A||\cdot||A^{-1}||$</p>
+<h2 id="PU-LA分解"><a href="#PU-LA分解" class="headerlink" title="PU=LA分解"></a>PU=LA分解</h2><p>现在存在两个严重问题：0主元以及淹没问题，对于非奇异矩阵可以通过换行来改善</p>
+<h3 id="部分主元法"><a href="#部分主元法" class="headerlink" title="部分主元法"></a>部分主元法</h3><p>在每次消去之前保证该行主元为这这一列主元下面所有元素最大的。</p>
+<p>而PA=LU就是保留了换行和消去过程。</p>
+<h2 id="迭代方法"><a href="#迭代方法" class="headerlink" title="迭代方法"></a>迭代方法</h2><h3 id="雅可比方法"><a href="#雅可比方法" class="headerlink" title="雅可比方法"></a>雅可比方法</h3><script type="math/tex; mode=display">
+x_{k+1}=D^{-1}(b-(L+U)x_k)</script><p>收敛条件：严格对角占优矩阵</p>
+<h3 id="高斯-德塞尔方法和SOR"><a href="#高斯-德塞尔方法和SOR" class="headerlink" title="高斯-德塞尔方法和SOR"></a>高斯-德塞尔方法和SOR</h3><p>和雅可比一个思路，但是每次计算都进行数值更新，而不是一组计算之后再更新，可以加快收敛速度。</p>
+<p>连续过松弛；给定一个松弛参数$\omega$来调整迭代时候的变化量。</p>
+<h3 id="稀疏矩阵"><a href="#稀疏矩阵" class="headerlink" title="稀疏矩阵"></a>稀疏矩阵</h3><h2 id="对于正定"><a href="#对于正定" class="headerlink" title="对于正定"></a>对于正定</h2><h3 id="楚列斯基分解"><a href="#楚列斯基分解" class="headerlink" title="楚列斯基分解"></a>楚列斯基分解</h3><p>对于对称矩阵，只有一般矩阵一半的独立元素，那形如LU的分解是否可以将计算代价也降低一半？</p>
+<p>楚列斯基分解可以实现目的，即$A=R^TR$</p>
+<p>至于如何分解呢，对于二阶矩阵有：</p>
 <script type="math/tex; mode=display">
-P(x)_n=a_0+x(a_1+x(a_2+...(x(a_n))...))</script><p>为了方便计算可以写出一个matlab程序nest</p>
-<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">y</span>=<span class="title">nest</span><span class="params">(d,c,x,b)</span></span></span><br><span class="line"><span class="keyword">if</span> nargin&lt;<span class="number">4</span>,b=<span class="built_in">zeros</span>(d,<span class="number">1</span>);<span class="keyword">end</span>	\\nargin means number of input <span class="keyword">arguments</span></span><br><span class="line">y=c(d+<span class="number">1</span>);</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span>=d:<span class="number">-1</span>:<span class="number">1</span></span><br><span class="line">	y=y.*(x-b(<span class="built_in">i</span>))+c(<span class="built_in">i</span>);</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-<h2 id="二进制数字"><a href="#二进制数字" class="headerlink" title="二进制数字"></a>二进制数字</h2><h3 id="十进制转化为二进制"><a href="#十进制转化为二进制" class="headerlink" title="十进制转化为二进制"></a>十进制转化为二进制</h3><p>慢慢找二进制的最大位数再减去，当然保留这个寻找的过程可以直接写出数字变换，例如：$(53)_{10}$</p>
+A=
+\begin{bmatrix}
+a&b\\b&c
+\end{bmatrix}=
+\begin{bmatrix}
+\sqrt{a}&0\\ \frac{b}{\sqrt{a}}&\sqrt{c-b/a^2}
+\end{bmatrix}
+\begin{bmatrix}
+\sqrt{a}&\frac{b}{\sqrt{a}}\\ 0&\sqrt{c-b/a^2}
+\end{bmatrix}</script><p> 由外向内构造</p>
+<h3 id="共轭梯度方法"><a href="#共轭梯度方法" class="headerlink" title="共轭梯度方法"></a>共轭梯度方法</h3><p>先定义一个A内积：对于两个n维向量v和u，令</p>
 <script type="math/tex; mode=display">
-53\div2=26\cdots1\\
-26\div2=13\cdots0\\
-13\div2=6\cdots1\\
-6\div2=3\cdots0\\
-3\div2=1\cdots1\\
-1\div2=0\cdots1\\</script><p>直接有$(53)_10=(110101)_2$</p>
-<p>同理反过来有小数部分，例如$(0.7)_10$</p>
-<script type="math/tex; mode=display">
-0.7\times2=0.4+1\\
-0.4\times2=0.8+0\\
-0.8\times2=0.6+1\\
-0.6\times2=0.2+1\\
-0.2\times2=0.4+0\\</script><p>至此开始循环$(0.7)_10=(0.1\overline{0110})_2$</p>
-<h3 id="二进制转化为十进制"><a href="#二进制转化为十进制" class="headerlink" title="二进制转化为十进制"></a>二进制转化为十进制</h3><h4 id="不循环数字"><a href="#不循环数字" class="headerlink" title="不循环数字"></a>不循环数字</h4><p>洒洒水啦，以2为基展开求和。例如$(10101)_2$</p>
-<script type="math/tex; mode=display">
-1\times 2^4+0\times 2^3+1\times 2^1+1\times 2^0=(21)_{10}</script><h3 id="无限循环数字"><a href="#无限循环数字" class="headerlink" title="无限循环数字"></a>无限循环数字</h3><p>简单的相消即可，唯一要注意的是注意乘上去的系数是十进制还是二进制，例如$(0.\overline{1011})_2$</p>
-<script type="math/tex; mode=display">
-2^4 \times x=1011.\overline{1011}\\
-x=0.\overline{1011}\\
-(2^4-1)\times x=(1011)_2=(11)_{10}</script><h3 id="简单提一嘴十六进制"><a href="#简单提一嘴十六进制" class="headerlink" title="简单提一嘴十六进制"></a>简单提一嘴十六进制</h3><p>每个十六进制数可以用四个二进制数字进行表示，且每个数字均有数字或字母表述：0，1，2，3，$\cdots$</p>
-<p>，A(10)，B(11)，C(12)，D(13)，E(14)，F(15)。</p>
-<h2 id="实数的浮点数表述"><a href="#实数的浮点数表述" class="headerlink" title="实数的浮点数表述"></a>实数的浮点数表述</h2><h3 id="浮点格式"><a href="#浮点格式" class="headerlink" title="浮点格式"></a>浮点格式</h3><p>一个浮点数由三个部分组成：符号，尾数，指数。</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>精度</th>
-<th>符号</th>
-<th>指数</th>
-<th>尾数</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>单精度</td>
-<td>1</td>
-<td>8</td>
-<td>23</td>
-</tr>
-<tr>
-<td>双精度</td>
-<td>1</td>
-<td>11</td>
-<td>52</td>
-</tr>
-<tr>
-<td>长双精度</td>
-<td>1</td>
-<td>15</td>
-<td>64</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>标准化的$\textbf{IEEE}$浮点数表示为：</p>
-<script type="math/tex; mode=display">
-\pm 1.bbb\cdots b \times2^p</script><p>该数字全部为二进制数字，后面的$2^p$用来将前面的数字调整至1.开头，例如$(9)_{10}$，表示为</p>
-<script type="math/tex; mode=display">
-+1.001\times 2^3</script><p>虽然说对于双精度来说有整整52位尾数，但是表示数字还是会有误差，最小误差单位定义为机器精度$\varepsilon_{math}=2^{-52}$</p>
-<h4 id="IEEE舍入"><a href="#IEEE舍入" class="headerlink" title="IEEE舍入"></a>IEEE舍入</h4><p>一般而言53位凑0，除非53位为1且之后位数全部为0，此时52位凑0。</p>
-<p>$\textbf{IEEE}$机器算数模型中，fl(x)的相对舍入误差有上限：</p>
-<script type="math/tex; mode=display">
-\frac{|fl(x)-x|}{|x|}\leq \frac{1}{2} \varepsilon_{math}</script><h4 id="机器表示"><a href="#机器表示" class="headerlink" title="机器表示"></a>机器表示</h4><p>一个双精度浮点数会分配到8字节即使64位数字，有如下格式</p>
-<script type="math/tex; mode=display">
-se_1e_2\cdots e_{11}b_1b_2\cdots b_{52}</script><p>其中$s$为符号位，0表示正数，1表示负数。</p>
-<p>其中$e_1\cdots e_{11}$为指数位， 覆盖了1到2046之间，再减去1023得到实际表示的指数，在-1022到1023之间。</p>
-<p>最后面52位表示尾数。</p>
-<p>例如数字1，用浮点数表示： </p>
-<script type="math/tex; mode=display">
-1=+1.000\cdots 000\times 2^0</script><p>用机器表示就是：</p>
-<script type="math/tex; mode=display">
-|0|01111111111|0000\cdots 0000|</script><p>第一个零表示正号，后面十一位数字为1023，减去1023得到0说明指数为零。</p>
-
+(v,w)_A=v^TAv</script><p>如果v,w的A内积为0，则称u和v为A共轭</p>
+<h3 id="预条件共轭梯度法"><a href="#预条件共轭梯度法" class="headerlink" title="预条件共轭梯度法"></a>预条件共轭梯度法</h3>
     </div>
 
     
@@ -310,7 +263,7 @@ se_1e_2\cdots e_{11}b_1b_2\cdots b_{52}</script><p>其中$s$为符号位，0表�
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://fengbu-jue.github.io/2022/04/06/%E7%AC%AC%E4%B8%80%E7%AB%A0.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="Chapter 0 数值分析基础知识">https://fengbu-jue.github.io/2022/04/06/第一章.基础知识/</a>
+    <a href="https://fengbu-jue.github.io/2022/05/18/%E7%AC%AC%E4%B8%89%E7%AB%A0.%E6%96%B9%E7%A8%8B%E7%BB%84%E6%B1%82%E8%A7%A3/" title="Chapter 3   方程组求解">https://fengbu-jue.github.io/2022/05/18/第三章.方程组求解/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -327,13 +280,10 @@ se_1e_2\cdots e_{11}b_1b_2\cdots b_{52}</script><p>其中$s$为符号位，0表�
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/04/06/%E7%AC%AC%E5%9B%9B%E7%AB%A0.%E6%8F%92%E5%80%BC/" rel="prev" title="Chapter 4	插值">
-      <i class="fa fa-chevron-left"></i> Chapter 4	插值
+    <a href="/2022/04/28/%E5%9B%BE%E8%AE%BA%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95/" rel="prev" title="搜索基础算法">
+      <i class="fa fa-chevron-left"></i> 搜索基础算法
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/04/06/%E7%AC%AC%E4%BA%8C%E7%AB%A0.%E6%96%B9%E7%A8%8B%E6%B1%82%E8%A7%A3/" rel="next" title="Chapter 1	求解方程">
-      Chapter 1	求解方程 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -392,7 +342,7 @@ se_1e_2\cdots e_{11}b_1b_2\cdots b_{52}</script><p>其中$s$为符号位，0表�
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E9%A1%B9%E5%BC%8F%E6%B1%82%E5%80%BC"><span class="nav-number">1.</span> <span class="nav-text">多项式求值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%95%B0%E5%AD%97"><span class="nav-number">2.</span> <span class="nav-text">二进制数字</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%81%E8%BF%9B%E5%88%B6%E8%BD%AC%E5%8C%96%E4%B8%BA%E4%BA%8C%E8%BF%9B%E5%88%B6"><span class="nav-number">2.1.</span> <span class="nav-text">十进制转化为二进制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E8%BD%AC%E5%8C%96%E4%B8%BA%E5%8D%81%E8%BF%9B%E5%88%B6"><span class="nav-number">2.2.</span> <span class="nav-text">二进制转化为十进制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8D%E5%BE%AA%E7%8E%AF%E6%95%B0%E5%AD%97"><span class="nav-number">2.2.1.</span> <span class="nav-text">不循环数字</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E9%99%90%E5%BE%AA%E7%8E%AF%E6%95%B0%E5%AD%97"><span class="nav-number">2.3.</span> <span class="nav-text">无限循环数字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E6%8F%90%E4%B8%80%E5%98%B4%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6"><span class="nav-number">2.4.</span> <span class="nav-text">简单提一嘴十六进制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E6%95%B0%E7%9A%84%E6%B5%AE%E7%82%B9%E6%95%B0%E8%A1%A8%E8%BF%B0"><span class="nav-number">3.</span> <span class="nav-text">实数的浮点数表述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%AE%E7%82%B9%E6%A0%BC%E5%BC%8F"><span class="nav-number">3.1.</span> <span class="nav-text">浮点格式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#IEEE%E8%88%8D%E5%85%A5"><span class="nav-number">3.1.1.</span> <span class="nav-text">IEEE舍入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E8%A1%A8%E7%A4%BA"><span class="nav-number">3.1.2.</span> <span class="nav-text">机器表示</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%B4%E7%B4%A0%E7%9A%84%E9%AB%98%E6%96%AF%E6%B6%88%E5%8E%BB%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">朴素的高斯消去法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90%EF%BC%9A"><span class="nav-number">1.1.</span> <span class="nav-text">复杂度分析：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LU%E5%88%86%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text">LU分解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%8D%E6%9D%82%E5%BA%A6%EF%BC%9A"><span class="nav-number">2.1.</span> <span class="nav-text">复杂度：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%AF%E5%B7%AE%E5%88%86%E6%9E%90"><span class="nav-number">3.</span> <span class="nav-text">误差分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%A0%E7%A9%B7%E8%8C%83%E6%95%B0%EF%BC%9A"><span class="nav-number">3.1.</span> <span class="nav-text">无穷范数：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PU-LA%E5%88%86%E8%A7%A3"><span class="nav-number">4.</span> <span class="nav-text">PU&#x3D;LA分解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E5%88%86%E4%B8%BB%E5%85%83%E6%B3%95"><span class="nav-number">4.1.</span> <span class="nav-text">部分主元法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E6%96%B9%E6%B3%95"><span class="nav-number">5.</span> <span class="nav-text">迭代方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%85%E5%8F%AF%E6%AF%94%E6%96%B9%E6%B3%95"><span class="nav-number">5.1.</span> <span class="nav-text">雅可比方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AB%98%E6%96%AF-%E5%BE%B7%E5%A1%9E%E5%B0%94%E6%96%B9%E6%B3%95%E5%92%8CSOR"><span class="nav-number">5.2.</span> <span class="nav-text">高斯-德塞尔方法和SOR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A8%80%E7%96%8F%E7%9F%A9%E9%98%B5"><span class="nav-number">5.3.</span> <span class="nav-text">稀疏矩阵</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E4%BA%8E%E6%AD%A3%E5%AE%9A"><span class="nav-number">6.</span> <span class="nav-text">对于正定</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A5%9A%E5%88%97%E6%96%AF%E5%9F%BA%E5%88%86%E8%A7%A3"><span class="nav-number">6.1.</span> <span class="nav-text">楚列斯基分解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B1%E8%BD%AD%E6%A2%AF%E5%BA%A6%E6%96%B9%E6%B3%95"><span class="nav-number">6.2.</span> <span class="nav-text">共轭梯度方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E6%9D%A1%E4%BB%B6%E5%85%B1%E8%BD%AD%E6%A2%AF%E5%BA%A6%E6%B3%95"><span class="nav-number">6.3.</span> <span class="nav-text">预条件共轭梯度法</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
