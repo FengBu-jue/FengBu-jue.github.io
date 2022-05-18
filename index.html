@@ -188,7 +188,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-05-18 21:53:16 / 修改时间：21:54:10" itemprop="dateCreated datePublished" datetime="2022-05-18T21:53:16+08:00">2022-05-18</time>
+              <time title="创建时间：2022-05-18 21:53:16 / 修改时间：22:07:25" itemprop="dateCreated datePublished" datetime="2022-05-18T21:53:16+08:00">2022-05-18</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -216,37 +216,15 @@
 <p>回代过程：$n^2$</p>
 <h2 id="LU分解"><a href="#LU分解" class="headerlink" title="LU分解"></a>LU分解</h2><p>和高斯消去一个意思，保留了消去的过程方便与对付系数矩阵不变的大量方程组。</p>
 <h3 id="复杂度："><a href="#复杂度：" class="headerlink" title="复杂度："></a>复杂度：</h3><p>$\approx \frac{2}{3} n^3+2kn^2$</p>
-<h2 id="误差分析"><a href="#误差分析" class="headerlink" title="误差分析"></a>误差分析</h2><h3 id="无穷范数："><a href="#无穷范数：" class="headerlink" title="无穷范数："></a>无穷范数：</h3><p>对于向量x而言，其无穷范数$||x||_{\infin}$为其中绝对值最大值。</p>
-<p>相对前向误差：$\frac{||x-x_a||_\infin}{||x||_\infin}$</p>
-<p>相对后向误差：$\frac{||r||_\infin}{||b||_\infin}$</p>
-<p>定义误差放大因子为：相对现象误差除以相对后向误差</p>
-<p>然后定义条件数 cond (A)为为对于所有b可能出现的最大误差放大因子。</p>
-<p>且$cond(A)=||A||\cdot||A^{-1}||$</p>
-<h2 id="PU-LA分解"><a href="#PU-LA分解" class="headerlink" title="PU=LA分解"></a>PU=LA分解</h2><p>现在存在两个严重问题：0主元以及淹没问题，对于非奇异矩阵可以通过换行来改善</p>
-<h3 id="部分主元法"><a href="#部分主元法" class="headerlink" title="部分主元法"></a>部分主元法</h3><p>在每次消去之前保证该行主元为这这一列主元下面所有元素最大的。</p>
-<p>而PA=LU就是保留了换行和消去过程。</p>
-<h2 id="迭代方法"><a href="#迭代方法" class="headerlink" title="迭代方法"></a>迭代方法</h2><h3 id="雅可比方法"><a href="#雅可比方法" class="headerlink" title="雅可比方法"></a>雅可比方法</h3><script type="math/tex; mode=display">
-x_{k+1}=D^{-1}(b-(L+U)x_k)</script><p>收敛条件：严格对角占优矩阵</p>
-<h3 id="高斯-德塞尔方法和SOR"><a href="#高斯-德塞尔方法和SOR" class="headerlink" title="高斯-德塞尔方法和SOR"></a>高斯-德塞尔方法和SOR</h3><p>和雅可比一个思路，但是每次计算都进行数值更新，而不是一组计算之后再更新，可以加快收敛速度。</p>
-<p>连续过松弛；给定一个松弛参数$\omega$来调整迭代时候的变化量。</p>
-<h3 id="稀疏矩阵"><a href="#稀疏矩阵" class="headerlink" title="稀疏矩阵"></a>稀疏矩阵</h3><h2 id="对于正定"><a href="#对于正定" class="headerlink" title="对于正定"></a>对于正定</h2><h3 id="楚列斯基分解"><a href="#楚列斯基分解" class="headerlink" title="楚列斯基分解"></a>楚列斯基分解</h3><p>对于对称矩阵，只有一般矩阵一半的独立元素，那形如LU的分解是否可以将计算代价也降低一半？</p>
-<p>楚列斯基分解可以实现目的，即$A=R^TR$</p>
-<p>至于如何分解呢，对于二阶矩阵有：</p>
-<script type="math/tex; mode=display">
-A=
-\begin{bmatrix}
-a&b\\b&c
-\end{bmatrix}=
-\begin{bmatrix}
-\sqrt{a}&0\\ \frac{b}{\sqrt{a}}&\sqrt{c-b/a^2}
-\end{bmatrix}
-\begin{bmatrix}
-\sqrt{a}&\frac{b}{\sqrt{a}}\\ 0&\sqrt{c-b/a^2}
-\end{bmatrix}</script><p> 由外向内构造</p>
-<h3 id="共轭梯度方法"><a href="#共轭梯度方法" class="headerlink" title="共轭梯度方法"></a>共轭梯度方法</h3><p>先定义一个A内积：对于两个n维向量v和u，令</p>
-<script type="math/tex; mode=display">
-(v,w)_A=v^TAv</script><p>如果v,w的A内积为0，则称u和v为A共轭</p>
-<h3 id="预条件共轭梯度法"><a href="#预条件共轭梯度法" class="headerlink" title="预条件共轭梯度法"></a>预条件共轭梯度法</h3>
+<h2 id="误差分析"><a href="#误差分析" class="headerlink" title="误差分析"></a>误差分析</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/05/18/%E7%AC%AC%E4%B8%89%E7%AB%A0.%E6%96%B9%E7%A8%8B%E7%BB%84%E6%B1%82%E8%A7%A3/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
