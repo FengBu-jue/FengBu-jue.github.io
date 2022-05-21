@@ -20,19 +20,19 @@
     var CONFIG = {"hostname":"fengbu-jue.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="最小二乘法和法线方程对于不一致系统（方程数目多于未知数），无法得到一组满足所有条件的解，但是可以得到一个尽量精确的解。  A^TA\overline x&#x3D;A^TbQR分解施密特正交化见连续函数逼近 豪斯霍尔德反射子设投影矩阵为P，在向量v方向的投影矩阵为$P&#x3D;\frac{vv^T}{v^tv}$，满足$P^2&#x3D;P$。又令$H&#x3D;I-2P$,可以直观理解为反射矩阵，有$H^TH&#x3D;I$ 非线性最小二乘法">
+  <meta name="description" content="四大瘟疫急性传染病：发作快，倒得快 烈性传染病：毒性强，容易死 鼠疫、天花、霍乱、疟疾 霍乱疟疾死的慢 鼠疫天花横扫欧亚 地理大发现携带疾病，南美印第安人暴死。 第一次黑死病在中古黑暗时期，19世纪末才出现，避开了天花。 天花是病毒，被疫苗解决了 东罗马帝国1&#x2F;4的人因为瘟疫死亡了。（为什么没有西罗马？因为被灭了。。。汉朝赶匈奴，匈奴赶日耳曼，日耳曼灭了西罗马，向西打的时候还带了病毒） 中药必然有">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Chapter 5 最小二乘法">
-<meta property="og:url" content="https://fengbu-jue.github.io/2022/04/23/%E7%AC%AC%E4%BA%94%E7%AB%A0.%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95/index.html">
+<meta property="og:title" content="疾病">
+<meta property="og:url" content="https://fengbu-jue.github.io/2022/05/21/%E7%96%BE%E7%97%85/index.html">
 <meta property="og:site_name" content="珏的第一款博客捏">
-<meta property="og:description" content="最小二乘法和法线方程对于不一致系统（方程数目多于未知数），无法得到一组满足所有条件的解，但是可以得到一个尽量精确的解。  A^TA\overline x&#x3D;A^TbQR分解施密特正交化见连续函数逼近 豪斯霍尔德反射子设投影矩阵为P，在向量v方向的投影矩阵为$P&#x3D;\frac{vv^T}{v^tv}$，满足$P^2&#x3D;P$。又令$H&#x3D;I-2P$,可以直观理解为反射矩阵，有$H^TH&#x3D;I$ 非线性最小二乘法">
+<meta property="og:description" content="四大瘟疫急性传染病：发作快，倒得快 烈性传染病：毒性强，容易死 鼠疫、天花、霍乱、疟疾 霍乱疟疾死的慢 鼠疫天花横扫欧亚 地理大发现携带疾病，南美印第安人暴死。 第一次黑死病在中古黑暗时期，19世纪末才出现，避开了天花。 天花是病毒，被疫苗解决了 东罗马帝国1&#x2F;4的人因为瘟疫死亡了。（为什么没有西罗马？因为被灭了。。。汉朝赶匈奴，匈奴赶日耳曼，日耳曼灭了西罗马，向西打的时候还带了病毒） 中药必然有">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-04-23T07:19:33.957Z">
-<meta property="article:modified_time" content="2022-04-23T07:20:45.383Z">
+<meta property="article:published_time" content="2022-05-21T08:56:01.849Z">
+<meta property="article:modified_time" content="2022-05-21T08:58:44.777Z">
 <meta property="article:author" content="FengBu-jue">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://fengbu-jue.github.io/2022/04/23/%E7%AC%AC%E4%BA%94%E7%AB%A0.%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95/">
+<link rel="canonical" href="https://fengbu-jue.github.io/2022/05/21/%E7%96%BE%E7%97%85/">
 
 
 <script id="page-configurations">
@@ -45,7 +45,7 @@
   };
 </script>
 
-  <title>Chapter 5 最小二乘法 | 珏的第一款博客捏</title>
+  <title>疾病 | 珏的第一款博客捏</title>
   
 
 
@@ -166,7 +166,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://fengbu-jue.github.io/2022/04/23/%E7%AC%AC%E4%BA%94%E7%AB%A0.%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95/">
+    <link itemprop="mainEntityOfPage" href="https://fengbu-jue.github.io/2022/05/21/%E7%96%BE%E7%97%85/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/smile.png">
@@ -179,7 +179,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Chapter 5 最小二乘法
+          疾病
         </h1>
 
         <div class="post-meta">
@@ -190,7 +190,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-04-23 15:19:33 / 修改时间：15:20:45" itemprop="dateCreated datePublished" datetime="2022-04-23T15:19:33+08:00">2022-04-23</time>
+              <time title="创建时间：2022-05-21 16:56:01 / 修改时间：16:58:44" itemprop="dateCreated datePublished" datetime="2022-05-21T16:56:01+08:00">2022-05-21</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -198,7 +198,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/" itemprop="url" rel="index"><span itemprop="name">数值分析</span></a>
+                  <a href="/categories/%E8%A5%BF%E6%96%B9%E6%96%87%E6%98%8E%E5%8F%B2/" itemprop="url" rel="index"><span itemprop="name">西方文明史</span></a>
                 </span>
             </span>
 
@@ -213,50 +213,37 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="最小二乘法和法线方程"><a href="#最小二乘法和法线方程" class="headerlink" title="最小二乘法和法线方程"></a>最小二乘法和法线方程</h2><p>对于不一致系统（方程数目多于未知数），无法得到一组满足所有条件的解，但是可以得到一个尽量精确的解。</p>
-<script type="math/tex; mode=display">
-A^TA\overline x=A^Tb</script><h2 id="QR分解"><a href="#QR分解" class="headerlink" title="QR分解"></a>QR分解</h2><h3 id="施密特正交化"><a href="#施密特正交化" class="headerlink" title="施密特正交化"></a>施密特正交化</h3><p>见连续函数逼近</p>
-<h3 id="豪斯霍尔德反射子"><a href="#豪斯霍尔德反射子" class="headerlink" title="豪斯霍尔德反射子"></a>豪斯霍尔德反射子</h3><p>设投影矩阵为P，在向量v方向的投影矩阵为$P=\frac{vv^T}{v^tv}$，满足$P^2=P$。又令$H=I-2P$,可以直观理解为反射矩阵，有$H^TH=I$</p>
-<h2 id="非线性最小二乘法"><a href="#非线性最小二乘法" class="headerlink" title="非线性最小二乘法"></a>非线性最小二乘法</h2><span id="more"></span>
-<p>考虑m个方程:</p>
-<script type="math/tex; mode=display">
-r_1(x_,x_2\cdots x_n)=0\\
-\vdots\\
-r_m(x_,x_2\cdots x_n)=0\\</script><p>误差为：$E(x_1\cdots x_n)=\frac{1}{2}(r_1^2+\cdots+r_n^2)=\frac{1}{2}r^Tr$</p>
-<p>为了优化E，令其梯度为0：$0=F(x)=\triangledown E(x)=r^T(x)Dr(x)$</p>
-<p>待续（好难啊。。。）</p>
-<h2 id="连续函数的逼近"><a href="#连续函数的逼近" class="headerlink" title="连续函数的逼近"></a>连续函数的逼近</h2><p>首先定义函数的内积，例如在[a,b]区间上面f(x)和g(x)的内积为：</p>
-<script type="math/tex; mode=display">
-\int_{a}{^b}f(x)\times g(x)dx</script><p>然后再建立一个基的概念，任何一个不同的函数可以作为一个基，然后一些不同的基可以作为一组基，例如最常见的幂函数为基，一组幂函数基可以组成一个多项式函数。</p>
-<p>最后建立一组基函数组合的逼近连续函数的效果判断，一般适用最佳平方逼近条件：$\int_{a}^{b}|f(x)-g(x)|^2dx$越小，逼近效果越好。</p>
-<p>现推导如何求解最小二乘法：</p>
-<script type="math/tex; mode=display">
-\Delta(a_1,a_2,\cdots,a_n)=\int_{a}^b|f(x)-\sum_{i=1}^na_i\varphi _i|^2dx\\
-\frac{\partial\Delta}{\partial a_i}=\int_a^b|2\sum_{i=1}^na_i\varphi _i\times \varphi_i-2f(x)\sum_{i=1}^na_i\varphi _i|dx=0\\
-(\sum_1^na_i\varphi_i,\varphi_i)=(f(x),\varphi_i)\\
-\begin {bmatrix}
-{(\varphi_1,\varphi_1)}&{(\varphi_1,\varphi_2)}&{\cdots}\\
-{(\varphi_2,\varphi_1)}&{(\varphi_2,\varphi_2)}&{\cdots}\\
-{\vdots}&{\vdots}&{\ddots}\\
-\end {bmatrix}
-\begin{bmatrix}
-{a_0}\\
-{a_1}\\
-{\vdots}\\
-\end {bmatrix}
-=
-\begin{bmatrix}
-{(f(x),\varphi_1)}\\
-{(f(x),\varphi_2)}\\
-{\vdots}\\
-\end {bmatrix}</script><p>然而对于一般的幂函数基，该法向量矩阵为Hilbert矩阵，条件数极大，难以直接求解，但是如果选用正交基的话，法向量矩阵直接变成了对角线矩阵。</p>
-<p>当然实际上也可以看作对法向量矩阵的处理，和对基的处理是相似的，都是适用施密特正交化。</p>
-<p>对于一组基$(g_1(x),g_2(x),g_3(x)\cdots)$进行处理</p>
-<script type="math/tex; mode=display">
-p_1(x)=g_1(x)\\
-p_2(x)=g_2(x)-\frac{<g_2(x),p_1(x)>}{<p_1(x),p_1(x)>}p_1(x)\\
-p_3(x)=g_3(x)-\frac{<g_3(x),p_1(x)>}{<p_1(x),p_1(x)>}p_1(x)-\frac{<g_3(x),p_2(x)>}{<p_2(x),p_2(x)>}p_2(x)</script><p>如果对[-1,1]上的幂函数进行处理，可以得到勒让德多项式（Legendre Polynomials ）</p>
-<p>在正交基中引入权函数$w(x)$，正交条件变成$\int_a^bw(x)f(x)g(x)dx=0$</p>
+        <h2 id="四大瘟疫"><a href="#四大瘟疫" class="headerlink" title="四大瘟疫"></a>四大瘟疫</h2><p>急性传染病：发作快，倒得快</p>
+<p>烈性传染病：毒性强，容易死</p>
+<p>鼠疫、天花、霍乱、疟疾</p>
+<p>霍乱疟疾死的慢</p>
+<p>鼠疫天花横扫欧亚</p>
+<p>地理大发现携带疾病，南美印第安人暴死。</p>
+<p>第一次黑死病在中古黑暗时期，19世纪末才出现，避开了天花。</p>
+<p>天花是病毒，被疫苗解决了</p>
+<p>东罗马帝国1/4的人因为瘟疫死亡了。（为什么没有西罗马？因为被灭了。。。汉朝赶匈奴，匈奴赶日耳曼，日耳曼灭了西罗马，向西打的时候还带了病毒）</p>
+<p>中药必然有效，因为有无数的临床实验。14世纪时中国医学观念还挺超前的，之后就被西医吊打了。</p>
+<p>米兰发现了隔离对于黑死病的有效。</p>
+<h2 id="疾病对欧洲有巨大的打击"><a href="#疾病对欧洲有巨大的打击" class="headerlink" title="疾病对欧洲有巨大的打击"></a>疾病对欧洲有巨大的打击</h2><p>活在当下的观念：赎罪轮回当好人，no！逃不过黑死病的。</p>
+<p>《十日谈》：黑死病大流行时10个富裕青年男女避难，游玩，讲故事（对鼠疫的恐惧逃避，其他的书都讲神有多伟大）</p>
+<p>tips：《简爱》：霸道总裁爱上我（和当时现状主流不同，所以成了经典）</p>
+<p>宗教：在外传播文化，在内消灭文化。</p>
+<p>宗教烧尸体的习惯误打误撞缓解了瘟疫。</p>
+<p>牛顿躲瘟疫的时候是创造力最旺盛的时候。</p>
+<h2 id="对全球化的推动"><a href="#对全球化的推动" class="headerlink" title="对全球化的推动"></a>对全球化的推动</h2><p>农奴制度的崩塌：劳动力缺乏，人多了传染疾病。</p>
+<p>人们到处躲开荒了许多地方。</p>
+<p>大家认识到了生产的重要，懒得丧葬（麻了），宗教信仰下降。</p>
+<p>18世纪打扫卫生，到处灭鼠，但是又传到了印度中国。</p>
+<p>犹太人成了black sheep（你们爱干净是不是喜欢投毒，什么几把逻辑）</p>
+<p>犹太人太团结了，不会融入当地，被排斥。</p>
+<p>又屠杀女巫和猫，变相养老鼠。</p>
+<h2 id="中国的鼠疫"><a href="#中国的鼠疫" class="headerlink" title="中国的鼠疫"></a>中国的鼠疫</h2><p>一直有鼠疫，不过不严重。</p>
+<p>经方派和时方派。</p>
+<h2 id="细菌战"><a href="#细菌战" class="headerlink" title="细菌战"></a>细菌战</h2><p>炭疽：唯一能武器化（丘吉尔研究过但是不敢用）</p>
+<p>日本731想要用鼠疫当武器，不过还做不到。</p>
+<h2 id="天花"><a href="#天花" class="headerlink" title="天花"></a>天花</h2><p>人类历史上最致命的疾病，25%致死率，活下来也很吓人。</p>
+<p>很多人得过天花，康熙、咸丰、林肯、华盛顿、伊丽莎白一世……</p>
+<p>欧洲殖民者带了天花到新大陆。</p>
 
     </div>
 
@@ -272,7 +259,7 @@ p_3(x)=g_3(x)-\frac{<g_3(x),p_1(x)>}{<p_1(x),p_1(x)>}p_1(x)-\frac{<g_3(x),p_2(x)
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://fengbu-jue.github.io/2022/04/23/%E7%AC%AC%E4%BA%94%E7%AB%A0.%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95/" title="Chapter 5 最小二乘法">https://fengbu-jue.github.io/2022/04/23/第五章.最小二乘法/</a>
+    <a href="https://fengbu-jue.github.io/2022/05/21/%E7%96%BE%E7%97%85/" title="疾病">https://fengbu-jue.github.io/2022/05/21/疾病/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -289,12 +276,12 @@ p_3(x)=g_3(x)-\frac{<g_3(x),p_1(x)>}{<p_1(x),p_1(x)>}p_1(x)-\frac{<g_3(x),p_2(x)
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/04/06/%E7%AC%AC%E4%BA%8C%E7%AB%A0.%E6%96%B9%E7%A8%8B%E6%B1%82%E8%A7%A3/" rel="prev" title="Chapter 1	求解方程">
-      <i class="fa fa-chevron-left"></i> Chapter 1	求解方程
+    <a href="/2022/05/21/%E5%86%B7%E6%88%98%E5%92%8C%E6%88%98%E5%90%8E%E7%A7%A9%E5%BA%8F/" rel="prev" title="冷战与战后体系">
+      <i class="fa fa-chevron-left"></i> 冷战与战后体系
     </a></div>
       <div class="post-nav-item">
-    <a href="/2022/04/23/%E7%AC%AC%E5%85%AD%E7%AB%A0.%E6%95%B0%E5%80%BC%E5%BE%AE%E5%88%86%E7%A7%AF%E5%88%86/" rel="next" title="Chapter 6  数值微分与积分">
-      Chapter 6  数值微分与积分 <i class="fa fa-chevron-right"></i>
+    <a href="/2022/05/21/%E5%8C%97%E7%BE%8E%E6%B4%B2%E4%B8%8E%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%B8%9D%E5%9B%BD%E4%B8%BB%E4%B9%89/" rel="next" title="北美洲与第一次帝国主义">
+      北美洲与第一次帝国主义 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -354,7 +341,7 @@ p_3(x)=g_3(x)-\frac{<g_3(x),p_1(x)>}{<p_1(x),p_1(x)>}p_1(x)-\frac{<g_3(x),p_2(x)
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95%E5%92%8C%E6%B3%95%E7%BA%BF%E6%96%B9%E7%A8%8B"><span class="nav-number">1.</span> <span class="nav-text">最小二乘法和法线方程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#QR%E5%88%86%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text">QR分解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%BD%E5%AF%86%E7%89%B9%E6%AD%A3%E4%BA%A4%E5%8C%96"><span class="nav-number">2.1.</span> <span class="nav-text">施密特正交化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B1%AA%E6%96%AF%E9%9C%8D%E5%B0%94%E5%BE%B7%E5%8F%8D%E5%B0%84%E5%AD%90"><span class="nav-number">2.2.</span> <span class="nav-text">豪斯霍尔德反射子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">非线性最小二乘法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E7%BB%AD%E5%87%BD%E6%95%B0%E7%9A%84%E9%80%BC%E8%BF%91"><span class="nav-number">4.</span> <span class="nav-text">连续函数的逼近</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E5%A4%A7%E7%98%9F%E7%96%AB"><span class="nav-number">1.</span> <span class="nav-text">四大瘟疫</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%96%BE%E7%97%85%E5%AF%B9%E6%AC%A7%E6%B4%B2%E6%9C%89%E5%B7%A8%E5%A4%A7%E7%9A%84%E6%89%93%E5%87%BB"><span class="nav-number">2.</span> <span class="nav-text">疾病对欧洲有巨大的打击</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E5%85%A8%E7%90%83%E5%8C%96%E7%9A%84%E6%8E%A8%E5%8A%A8"><span class="nav-number">3.</span> <span class="nav-text">对全球化的推动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AD%E5%9B%BD%E7%9A%84%E9%BC%A0%E7%96%AB"><span class="nav-number">4.</span> <span class="nav-text">中国的鼠疫</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%86%E8%8F%8C%E6%88%98"><span class="nav-number">5.</span> <span class="nav-text">细菌战</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A9%E8%8A%B1"><span class="nav-number">6.</span> <span class="nav-text">天花</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -459,59 +446,6 @@ p_3(x)=g_3(x)-\frac{<g_3(x),p_1(x)>}{<p_1(x),p_1(x)>}p_1(x)-\frac{<g_3(x),p_2(x)
   
 
   
-      
-
-<script>
-  if (typeof MathJax === 'undefined') {
-    window.MathJax = {
-      loader: {
-        source: {
-          '[tex]/amsCd': '[tex]/amscd',
-          '[tex]/AMScd': '[tex]/amscd'
-        }
-      },
-      tex: {
-        inlineMath: {'[+]': [['$', '$']]},
-        tags: 'ams'
-      },
-      options: {
-        renderActions: {
-          findScript: [10, doc => {
-            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            });
-          }, '', false],
-          insertedScript: [200, () => {
-            document.querySelectorAll('mjx-container').forEach(node => {
-              let target = node.parentNode;
-              if (target.nodeName.toLowerCase() === 'li') {
-                target.parentNode.classList.add('has-jax');
-              }
-            });
-          }, '', false]
-        }
-      }
-    };
-    (function () {
-      var script = document.createElement('script');
-      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
-      script.defer = true;
-      document.head.appendChild(script);
-    })();
-  } else {
-    MathJax.startup.document.state(0);
-    MathJax.texReset();
-    MathJax.typeset();
-  }
-</script>
-
-    
 
   
 
